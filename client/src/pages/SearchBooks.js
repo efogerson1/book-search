@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Jumbotron, Container, Col, Form, Button, Card, CardColumns } from 'react-bootstrap';
+import { Container, Col, Form, Button, Card, Row } from 'react-bootstrap';
 
 import Auth from '../utils/auth';
 import { saveBook, searchGoogleBooks } from '../utils/API';
 import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
 import { SAVE_BOOK } from '../utils/mutations';
+import { useMutation } from '@apollo/client';
 
 const SearchBooks = () => {
   // create state for holding returned google api data
@@ -84,7 +85,7 @@ const SearchBooks = () => {
 
   return (
     <>
-      <Jumbotron fluid className='text-light bg-dark'>
+      <div fluid className='text-light bg-dark'>
         <Container>
           <h1>Search for Books!</h1>
           <Form onSubmit={handleFormSubmit}>
@@ -107,7 +108,7 @@ const SearchBooks = () => {
             </Form.Row>
           </Form>
         </Container>
-      </Jumbotron>
+      </div>
 
       <Container>
         <h2>
@@ -115,10 +116,11 @@ const SearchBooks = () => {
             ? `Viewing ${searchedBooks.length} results:`
             : 'Search for a book to begin'}
         </h2>
-        <CardColumns>
+        <Row>
           {searchedBooks.map((book) => {
             return (
-              <Card key={book.bookId} border='dark'>
+              <Col md='4' key={book.bookId}>
+              <Card  border='dark'>
                 {book.image ? (
                   <Card.Img src={book.image} alt={`The cover for ${book.title}`} variant='top' />
                 ) : null}
@@ -138,9 +140,10 @@ const SearchBooks = () => {
                   )}
                 </Card.Body>
               </Card>
+              </Col>
             );
           })}
-        </CardColumns>
+        </Row>
       </Container>
     </>
   );

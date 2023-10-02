@@ -41,7 +41,7 @@ const {data} = await addUser ({
 // login through auth
 Auth.login(data.addUser.token);
     } catch (error) {
-      console.error(err);
+      console.error(error);
       setShowAlert(true)
     }
 
